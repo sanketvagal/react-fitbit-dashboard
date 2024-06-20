@@ -1,0 +1,27 @@
+import React, { useEffect, useState } from "react";
+export default function Today({ token }) {
+  const [activityData, setActivityData] = useState(null);
+
+  useEffect(() => {
+    if (token) {
+      fetchActivityData(token);
+    }
+  }, [token]);
+
+  const fetchActivityData = async (token) => {
+    try {
+      const response = await axios.get(
+        "https://api.fitbit.com/1/user/-/activities/steps/date/today/1d.json",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setActivityData(response.data);
+    } catch (error) {
+      console.error("Error fetching activity data:", error);
+    }
+  };
+  return <div>Today {token}</div>;
+}
