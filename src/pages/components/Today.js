@@ -58,6 +58,17 @@ export default function Today({ token }) {
   console.log("goals", goals);
   console.log("values", activityValues);
 
+  /*...*/
+  const [displayPercentage, setDisplayPercentage] = useState({});
+
+  const handleMouseEnter = (key) => {
+    setDisplayPercentage((prevState) => ({ ...prevState, [key]: true }));
+  };
+
+  const handleMouseLeave = (key) => {
+    setDisplayPercentage((prevState) => ({ ...prevState, [key]: false }));
+  };
+
   return (
     <div>
       Today {token}
@@ -70,11 +81,24 @@ export default function Today({ token }) {
               <h4>{key}</h4>
               <p>Goal: {goals[key]}</p>
               <p>Activity Value: {activityValues[key]}</p>
-              <ProgressRing
-                value={activityValues[key]}
-                goal={key}
-                goalValue={goals[key]}
-              />
+              <p>
+                {" "}
+                {displayPercentage[key]
+                  ? `${((activityValues[key] / goals[key]) * 100).toFixed(
+                      2
+                    )}% out of ${goals[key]}`
+                  : `${activityValues[key]} ${key} done out of ${goals[key]}`}
+              </p>
+              <div
+                onMouseEnter={() => handleMouseEnter(key)}
+                onMouseLeave={() => handleMouseLeave(key)}
+              >
+                <ProgressRing
+                  value={activityValues[key]}
+                  goal={key}
+                  goalValue={goals[key]}
+                />
+              </div>
             </div>
           ))}
         </div>
