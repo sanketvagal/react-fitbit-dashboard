@@ -8,7 +8,7 @@ const ProgressRing = ({ value, goal, goalValue }) => {
       <CircularProgressbar
         value={value}
         maxValue={goalValue}
-        text={`${value} ${goal}`}
+        text={`${value}`}
         styles={buildStyles({
           pathColor: "#f8b26a",
           trailColor: "#d6d6d6",

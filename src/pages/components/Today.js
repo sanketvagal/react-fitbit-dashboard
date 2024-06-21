@@ -4,17 +4,38 @@ import ProgressRing from "./figs/ProgressRing";
 
 export default function Today({ token }) {
   const [activityData, setActivityData] = useState(null);
+  const [todayGoals, setTodayGoals] = useState(null);
+  const [todayData, setTodayData] = useState(null);
+
   const BASE_URL = "https://api.fitbit.com/1/user/-/activities";
   const endpoints = {
-    dailyGoals: `${BASE_URL}/goals/daily.json`,
-    todaySteps: `${BASE_URL}/steps/date/today/1d.json`,
-    // todayCalories: `${BASE_URL}/calories/date/today/1d.json`,
-    todayDistance: `${BASE_URL}/distance/date/today/1d.json`,
-    todayFloors: `${BASE_URL}/floors/date/today/1d.json`,
-    //   todayMinutesSedentary: `${BASE_URL}/minutesSedentary/date/today/1d.json`,
-    //   todayMinutesVeryActive: `${BASE_URL}/minutesVeryActive/date/today/1d.json`,
+    dailyActivities: `${BASE_URL}/date/today.json`,
   };
 
+  function mapTodayData(todayGoals, todayActivity) {
+    if (!todayGoals) {
+      return null;
+    }
+    const todayData = {};
+
+    Object.keys(todayGoals).forEach((key) => {
+      if (key === "distance") {
+        // Map to total distance from distances array
+        const totalDistance =
+          todayActivity.distances.find((d) => d.activity === "total")
+            ?.distance || 0;
+        todayData[key] = totalDistance;
+      } else if (key === "activeMinutes") {
+        // Map to veryActiveMinutes
+        todayData[key] = todayActivity.veryActiveMinutes;
+      } else {
+        // For other keys, use the value directly from todayActivity
+        todayData[key] = todayActivity[key];
+      }
+    });
+
+    return todayData;
+  }
   useEffect(() => {
     if (token) {
       fetchData(token, endpoints).then((data) => setActivityData(data));
@@ -25,40 +46,15 @@ export default function Today({ token }) {
     console.log("Component has re-rendered");
   });
 
-  // if (activityData) {
-  //   console.log("activityData", activityData);
-  // }
-  function extractGoalsAndValues(activityData) {
-    let goals = {};
-    let activityValues = {};
-
+  useEffect(() => {
     if (activityData) {
-      activityData.forEach((item) => {
-        if (item.goals) {
-          // check for goals
-          goals = { ...goals, ...item.goals };
-        } else {
-          // check for today values
-          for (let key in item) {
-            if (item[key] instanceof Array) {
-              item[key].forEach((activity) => {
-                activityValues[key.replace("activities-", "")] = activity.value;
-              });
-            }
-          }
-        }
-      });
+      setTodayGoals(activityData[0].goals);
+      setTodayData(mapTodayData(todayGoals, activityData[0].summary));
+      console.log("activityData", activityData);
+      console.log("todayData", todayData);
+      console.log("todayGoals", todayGoals);
     }
-
-    return { goals, activityValues };
-  }
-
-  const { goals, activityValues } = extractGoalsAndValues(activityData);
-
-  console.log("goals", goals);
-  console.log("values", activityValues);
-
-  /*...*/
+  }, [activityData]);
   const [displayPercentage, setDisplayPercentage] = useState({});
 
   const handleMouseEnter = (key) => {
@@ -68,37 +64,34 @@ export default function Today({ token }) {
   const handleMouseLeave = (key) => {
     setDisplayPercentage((prevState) => ({ ...prevState, [key]: false }));
   };
-
   return (
     <div>
-      Today {token}
-      {activityData ? (
+      {activityData && todayGoals && todayData ? (
         <div>
           <h4>Activity Data:</h4>
-          <pre>{JSON.stringify(activityData, null, 2)}</pre>
-          {Object.keys(activityValues).map((key) => (
-            <div key={key}>
-              <h4>{key}</h4>
-              <p>Goal: {goals[key]}</p>
-              <p>Activity Value: {activityValues[key]}</p>
-              <p>
-                {" "}
-                {displayPercentage[key]
-                  ? `${((activityValues[key] / goals[key]) * 100).toFixed(
-                      2
-                    )}% out of ${goals[key]}`
-                  : `${activityValues[key]} ${key} done out of ${goals[key]}`}
-              </p>
+          <pre>{JSON.stringify(todayGoals, null, 2)}</pre>
+          <pre>{JSON.stringify(todayData, null, 2)}</pre>
+          <h4>Today Activity values for Today Goals keys:</h4>
+          {Object.keys(todayGoals).map((key) => (
+            <div>
               <div
                 onMouseEnter={() => handleMouseEnter(key)}
                 onMouseLeave={() => handleMouseLeave(key)}
               >
                 <ProgressRing
-                  value={activityValues[key]}
+                  value={todayData[key]}
+                  goalValue={todayGoals[key]}
                   goal={key}
-                  goalValue={goals[key]}
                 />
               </div>
+              <p>
+                {" "}
+                {displayPercentage[key]
+                  ? `${((todayData[key] / todayGoals[key]) * 100).toFixed(
+                      2
+                    )}% out of ${todayGoals[key]}`
+                  : `${todayData[key]} ${key} done out of ${todayGoals[key]}`}
+              </p>
             </div>
           ))}
         </div>
