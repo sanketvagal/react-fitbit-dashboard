@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "./api";
+import ProgressRing from "./figs/ProgressRing";
 
 export default function Today({ token }) {
   const [activityData, setActivityData] = useState(null);
@@ -8,7 +9,7 @@ export default function Today({ token }) {
     dailyGoals: `${BASE_URL}/goals/daily.json`,
     todaySteps: `${BASE_URL}/steps/date/today/1d.json`,
     // todayCalories: `${BASE_URL}/calories/date/today/1d.json`,
-    // todayDistance: `${BASE_URL}/distance/date/today/1d.json`,
+    todayDistance: `${BASE_URL}/distance/date/today/1d.json`,
     todayFloors: `${BASE_URL}/floors/date/today/1d.json`,
     //   todayMinutesSedentary: `${BASE_URL}/minutesSedentary/date/today/1d.json`,
     //   todayMinutesVeryActive: `${BASE_URL}/minutesVeryActive/date/today/1d.json`,
@@ -69,6 +70,11 @@ export default function Today({ token }) {
               <h4>{key}</h4>
               <p>Goal: {goals[key]}</p>
               <p>Activity Value: {activityValues[key]}</p>
+              <ProgressRing
+                value={activityValues[key]}
+                goal={key}
+                goalValue={goals[key]}
+              />
             </div>
           ))}
         </div>
