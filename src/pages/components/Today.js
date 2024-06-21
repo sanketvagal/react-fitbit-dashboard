@@ -73,7 +73,7 @@ export default function Today({ token }) {
           <pre>{JSON.stringify(todayData, null, 2)}</pre>
           <h4>Today Activity values for Today Goals keys:</h4>
           {Object.keys(todayGoals).map((key) => (
-            <div>
+            <div key={key}>
               <div
                 onMouseEnter={() => handleMouseEnter(key)}
                 onMouseLeave={() => handleMouseLeave(key)}
