@@ -6,6 +6,7 @@ export default function Today({ token }) {
   const [activityData, setActivityData] = useState(null);
   const [todayGoals, setTodayGoals] = useState(null);
   const [todayData, setTodayData] = useState(null);
+  const [displayPercentage, setDisplayPercentage] = useState({});
 
   const BASE_URL = "https://api.fitbit.com/1/user/-/activities";
   const endpoints = {
@@ -43,10 +44,6 @@ export default function Today({ token }) {
   }, [token]);
 
   useEffect(() => {
-    console.log("Component has re-rendered");
-  });
-
-  useEffect(() => {
     if (activityData) {
       setTodayGoals(activityData[0].goals);
       setTodayData(mapTodayData(todayGoals, activityData[0].summary));
@@ -55,7 +52,6 @@ export default function Today({ token }) {
       console.log("todayGoals", todayGoals);
     }
   }, [activityData]);
-  const [displayPercentage, setDisplayPercentage] = useState({});
 
   const handleMouseEnter = (key) => {
     setDisplayPercentage((prevState) => ({ ...prevState, [key]: true }));
@@ -64,14 +60,12 @@ export default function Today({ token }) {
   const handleMouseLeave = (key) => {
     setDisplayPercentage((prevState) => ({ ...prevState, [key]: false }));
   };
+
   return (
     <div>
-      {activityData && todayGoals && todayData ? (
+      {todayData ? (
         <div>
-          <h4>Activity Data:</h4>
-          <pre>{JSON.stringify(todayGoals, null, 2)}</pre>
-          <pre>{JSON.stringify(todayData, null, 2)}</pre>
-          <h4>Today Activity values for Today Goals keys:</h4>
+          <h3>Today</h3>
           {Object.keys(todayGoals).map((key) => (
             <div key={key}>
               <div
