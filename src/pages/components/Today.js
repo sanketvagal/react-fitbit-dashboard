@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "./api";
 import ProgressRing from "./figs/ProgressRing";
+import styles from "./Today.module.css";
 
 export default function Today({ token }) {
   const [activityData, setActivityData] = useState(null);
@@ -34,7 +35,7 @@ export default function Today({ token }) {
         todayData[key] = todayActivity[key];
       }
     });
-
+    console.log("todayData", todayData);
     return todayData;
   }
   useEffect(() => {
@@ -48,7 +49,6 @@ export default function Today({ token }) {
       setTodayGoals(activityData[0].goals);
       setTodayData(mapTodayData(todayGoals, activityData[0].summary));
       console.log("activityData", activityData);
-      console.log("todayData", todayData);
       console.log("todayGoals", todayGoals);
     }
   }, [activityData]);
@@ -66,28 +66,33 @@ export default function Today({ token }) {
       {todayData ? (
         <div>
           <h3>Today</h3>
-          {Object.keys(todayGoals).map((key) => (
-            <div key={key}>
+          <div className={styles.box}>
+            {Object.keys(todayGoals).map((key) => (
               <div
-                onMouseEnter={() => handleMouseEnter(key)}
-                onMouseLeave={() => handleMouseLeave(key)}
+                key={key}
+                className={key == "steps" ? styles.favourite : styles.item}
               >
-                <ProgressRing
-                  value={todayData[key]}
-                  goalValue={todayGoals[key]}
-                  goal={key}
-                />
+                <div
+                  onMouseEnter={() => handleMouseEnter(key)}
+                  onMouseLeave={() => handleMouseLeave(key)}
+                >
+                  <ProgressRing
+                    className={styles.progressRing}
+                    value={todayData[key]}
+                    goalValue={todayGoals[key]}
+                    goal={key}
+                  />
+                  <p>
+                    {displayPercentage[key]
+                      ? `${((todayData[key] / todayGoals[key]) * 100).toFixed(
+                          0
+                        )}% out of ${todayGoals[key]}`
+                      : `${todayData[key]} ${key} done out of ${todayGoals[key]}`}
+                  </p>
+                </div>
               </div>
-              <p>
-                {" "}
-                {displayPercentage[key]
-                  ? `${((todayData[key] / todayGoals[key]) * 100).toFixed(
-                      2
-                    )}% out of ${todayGoals[key]}`
-                  : `${todayData[key]} ${key} done out of ${todayGoals[key]}`}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       ) : (
         <p>Loading activity data...</p>

@@ -17,8 +17,8 @@ export default function Home() {
         <LoginPage onTokenChange={handleTokenChange} />
       ) : (
         <div>
-          <h4>Token in Parent:</h4>
-          <pre>{token}</pre>
+          <h2>Dashboard</h2>
+          {console.log("token", token)}
           <Today token={token} />
         </div>
       )}
