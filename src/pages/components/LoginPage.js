@@ -18,7 +18,7 @@ const UserInfo = ({ onTokenChange }) => {
     if (token) {
       onTokenChange(token);
     }
-  }, [token, onTokenChange]);
+  }, []);
 
   return (
     <>
