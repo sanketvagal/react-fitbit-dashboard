@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import LoginPage from "./components/LoginPage";
 import Today from "./components/Today";
+import RHRMonth from "./components/RHRMonth";
 
 export default function Home() {
   const [token, setToken] = useState(null);
@@ -19,7 +20,14 @@ export default function Home() {
         <div>
           <h2>Dashboard</h2>
           {console.log("token", token)}
-          <Today token={token} />
+          <div className="container">
+            <div className="item">
+              <Today token={token} />
+            </div>
+            <div className="item">
+              <RHRMonth token={token} />
+            </div>
+          </div>
         </div>
       )}
     </React.StrictMode>
