@@ -1,0 +1,15 @@
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 600px;
+  height: 400px;
+  justify-content: center;
+  align-content: center;
+  row-gap: 10px;
+  column-gap: 2em;
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 10px;
+}

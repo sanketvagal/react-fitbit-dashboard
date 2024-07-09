@@ -23,8 +23,8 @@ ChartJS.register(
   annotationPlugin
 );
 
-const RHRChart = ({ chartData }) => {
-  return <Line data={chartData} />;
+const RHRChart = ({ chartData, options }) => {
+  return <Line data={chartData} options={options} />;
 };
 
 export default RHRChart;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "./api";
 import RHRChart from "./figs/RHRChart";
-import styles from "./Today.module.css";
+import styles from "./RHRMonth.module.css";
 import moment from "moment";
 
 const processHeartRateData = (rhrData) => {
@@ -41,6 +41,25 @@ const generateChartData = (restingHeartRates, dateTimes) => {
     ],
   };
 };
+const options = {
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      display: false,
+    },
+  },
+};
 
 export default function RHRMonth({ token }) {
   const [rhrData, setRhrData] = useState(null);
@@ -74,9 +93,9 @@ export default function RHRMonth({ token }) {
   return (
     <div>
       {rhrData ? (
-        <div>
+        <div className={styles.box}>
           <h3>Resting Heart Rate Over Time</h3>
-          {chartData && <RHRChart chartData={chartData} />}
+          {chartData && <RHRChart chartData={chartData} options={options} />}
         </div>
       ) : (
         <p>Loading activity data...</p>
