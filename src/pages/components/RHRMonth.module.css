@@ -2,8 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  width: 600px;
-  height: 400px;
+  width: 500px;
+  height: 300px;
   justify-content: center;
   align-content: center;
   row-gap: 10px;

@@ -4,7 +4,7 @@ import axios from "axios";
 import LoginPage from "./components/LoginPage";
 import Today from "./components/Today";
 import RHRMonth from "./components/RHRMonth";
-
+import Badges from "./components/Badges";
 export default function Home() {
   const [token, setToken] = useState(null);
 
@@ -26,6 +26,9 @@ export default function Home() {
             </div>
             <div className="item">
               <RHRMonth token={token} />
+            </div>
+            <div className="item">
+              <Badges token={token} />
             </div>
           </div>
         </div>
