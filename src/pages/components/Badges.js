@@ -40,11 +40,15 @@ export default function Badges({ token }) {
           <h3>Badges</h3>
 
           <div key={currentIndex}>
+            <img
+              src={badges[currentIndex].image100px}
+              alt={badges[currentIndex].shortName}
+            />
+
             <p>Category: {badges[currentIndex].category}</p>
             <p>Short name: {badges[currentIndex].shortName}</p>
             <p>Date Achieved: {badges[currentIndex].dateTime}</p>
             <p>Description: {badges[currentIndex].description}</p>
-            <img src={badges[currentIndex].image100px} alt="badge" />
             <hr />
           </div>
           <button onClick={handlePrev} disabled={currentIndex === 0}>
