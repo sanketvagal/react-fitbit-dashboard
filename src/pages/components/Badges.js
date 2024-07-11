@@ -13,7 +13,7 @@ export default function Badges({ token }) {
 
   useEffect(() => {
     if (token) {
-      console.log("fetching badges");
+      // console.log("fetching badges");
       fetchData(token, endpoints).then((data) => setBadges(data[0].badges));
     }
   }, [token]);

@@ -35,7 +35,7 @@ export default function Today({ token }) {
         todayData[key] = todayActivity[key];
       }
     });
-    console.log("todayData", todayData);
+    // console.log("todayData", todayData);
     return todayData;
   }
   useEffect(() => {
@@ -48,8 +48,8 @@ export default function Today({ token }) {
     if (activityData) {
       setTodayGoals(activityData[0].goals);
       setTodayData(mapTodayData(todayGoals, activityData[0].summary));
-      console.log("activityData", activityData);
-      console.log("todayGoals", todayGoals);
+      // console.log("activityData", activityData);
+      // console.log("todayGoals", todayGoals);
     }
   }, [activityData]);
 
