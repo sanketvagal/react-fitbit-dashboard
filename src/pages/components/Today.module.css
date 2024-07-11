@@ -1,7 +1,8 @@
 /* styles.css */
 .box {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
+  flex-flow: row wrap-reverse;
   align-items: center;
   width: 300px;
   height: 550px;
@@ -19,8 +20,6 @@
   flex: 1;
 }
 
-.favourite {
-  /* order: -1; */
-  flex: 1 1 auto;
-  text-align: center;
+.progressRingText {
+  height: 50px;
 }

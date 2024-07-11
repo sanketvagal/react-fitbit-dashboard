@@ -72,7 +72,7 @@ export default function Today({ token }) {
                 key={key}
                 className={key == "steps" ? styles.favourite : styles.item}
               >
-                <div
+                <center
                   onMouseEnter={() => handleMouseEnter(key)}
                   onMouseLeave={() => handleMouseLeave(key)}
                 >
@@ -82,14 +82,14 @@ export default function Today({ token }) {
                     goalValue={todayGoals[key]}
                     goal={key}
                   />
-                  <p>
+                  <p className={styles.progressRingText}>
                     {displayPercentage[key]
                       ? `${((todayData[key] / todayGoals[key]) * 100).toFixed(
                           0
                         )}% out of ${todayGoals[key]}`
                       : `${todayData[key]} ${key} done out of ${todayGoals[key]}`}
                   </p>
-                </div>
+                </center>
               </div>
             ))}
           </div>

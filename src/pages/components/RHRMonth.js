@@ -50,7 +50,7 @@ const options = {
     },
     y: {
       grid: {
-        display: false,
+        display: true,
       },
     },
   },
