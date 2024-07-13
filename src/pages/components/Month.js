@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "./api";
-
+import BarChart from "./figs/BarChart";
 export default function Month({ token }) {
   const [stat, setStat] = useState(null);
   const [data, setData] = useState(null);
@@ -32,7 +32,12 @@ export default function Month({ token }) {
   return (
     <div>
       <h3>Month</h3>
-      {data ? <div>{JSON.stringify(steps)}</div> : <p>Loading...</p>}
+      {steps ? (
+        // <div>{JSON.stringify(steps)}</div>
+        <BarChart steps={steps} />
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }

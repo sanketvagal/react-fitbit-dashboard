@@ -6,6 +6,8 @@ import Today from "./components/Today";
 import RHRMonth from "./components/RHRMonth";
 import Badges from "./components/Badges";
 import Month from "./components/Month";
+import styles from "./index.module.css";
+
 export default function Home() {
   const [token, setToken] = useState(null);
 
@@ -22,16 +24,16 @@ export default function Home() {
           <h2>Dashboard</h2>
           {console.log("token", token)}
           <div className="container">
-            <div className="item">
+            <div className={styles.item}>
               <Month token={token} />
             </div>
-            <div className="item">
+            <div className={styles.item}>
               <Today token={token} />
             </div>
-            <div className="item">
+            <div className={styles.item}>
               <RHRMonth token={token} />
             </div>
-            <div className="item">
+            <div className={styles.item}>
               <Badges token={token} />
             </div>
           </div>
