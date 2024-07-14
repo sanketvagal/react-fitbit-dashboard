@@ -7,6 +7,7 @@ import RHRMonth from "./components/RHRMonth";
 import Badges from "./components/Badges";
 import styles from "./index.module.css";
 import ActivityChart from "./components/ActivityChart";
+import SleepChart from "./components/SleepChart";
 
 export default function Home() {
   const [token, setToken] = useState(null);
@@ -24,6 +25,9 @@ export default function Home() {
           <h2>Dashboard</h2>
           {console.log("token", token)}
           <div className="container">
+            <div className={styles.item}>
+              <SleepChart token={token} />
+            </div>
             <div className={styles.item}>
               <ActivityChart token={token} />
             </div>

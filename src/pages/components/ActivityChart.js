@@ -26,25 +26,24 @@ export default function ActivityChart({ token }) {
     }
   };
 
-  const oneMonthAgo = getDateRange(dateRange);
   const formatDate = (date) => date.toISOString().split("T")[0];
 
   const BASE_URL = "https://api.fitbit.com/1/user/-/activities";
   const endpoints = {
-    steps: `${BASE_URL}/steps/date/${formatDate(oneMonthAgo)}/${formatDate(
-      today
-    )}.json`,
+    steps: `${BASE_URL}/steps/date/${formatDate(
+      getDateRange(dateRange)
+    )}/${formatDate(today)}.json`,
     calories: `${BASE_URL}/calories/date/${formatDate(
-      oneMonthAgo
+      getDateRange(dateRange)
     )}/${formatDate(today)}.json`,
     distance: `${BASE_URL}/distance/date/${formatDate(
-      oneMonthAgo
+      getDateRange(dateRange)
     )}/${formatDate(today)}.json`,
-    floors: `${BASE_URL}/floors/date/${formatDate(oneMonthAgo)}/${formatDate(
-      today
-    )}.json`,
+    floors: `${BASE_URL}/floors/date/${formatDate(
+      getDateRange(dateRange)
+    )}/${formatDate(today)}.json`,
     activeMinutes: `${BASE_URL}/minutesFairlyActive/date/${formatDate(
-      oneMonthAgo
+      getDateRange(dateRange)
     )}/${formatDate(today)}.json`,
   };
 
@@ -59,6 +58,7 @@ export default function ActivityChart({ token }) {
       setSteps(data[0]["activities-steps"]);
       setCalories(data[1]["activities-calories"]);
       setDistance(data[2]["activities-distance"]);
+      console.log(distance);
       setFloors(data[3]["activities-floors"]);
       setActiveMinutes(data[4]["activities-minutesFairlyActive"]);
     }
