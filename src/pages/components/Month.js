@@ -5,6 +5,7 @@ export default function Month({ token }) {
   const [stat, setStat] = useState(null);
   const [data, setData] = useState(null);
   const [steps, setSteps] = useState(null);
+  const [calories, setCalories] = useState(null);
   const today = new Date();
   const oneMonthAgo = new Date(new Date().setMonth(today.getMonth() - 1));
   const formatDate = (date) => date.toISOString().split("T")[0];
@@ -14,6 +15,9 @@ export default function Month({ token }) {
     steps: `${BASE_URL}/steps/date/${formatDate(oneMonthAgo)}/${formatDate(
       today
     )}.json`,
+    calories: `${BASE_URL}/calories/date/${formatDate(
+      oneMonthAgo
+    )}/${formatDate(today)}.json`,
   };
   useEffect(() => {
     if (token) {
@@ -25,7 +29,9 @@ export default function Month({ token }) {
     if (data) {
       console.log("data", data);
       console.log("steps", data[0]["activities-steps"]);
+      console.log("calories", data[1]["activities-calories"]);
       setSteps(data[0]["activities-steps"]);
+      setCalories(data[1]["activities-calories"]);
     }
   }, [data]);
 
@@ -34,7 +40,10 @@ export default function Month({ token }) {
       <h3>Month</h3>
       {steps ? (
         // <div>{JSON.stringify(steps)}</div>
-        <BarChart steps={steps} />
+        <div>
+          <BarChart label={"Steps"} activity={steps} color={"#4cc2c4"} />
+          <BarChart label={"Calories"} activity={calories} color={"#FFB347"} />
+        </div>
       ) : (
         <p>Loading...</p>
       )}

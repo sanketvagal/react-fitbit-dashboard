@@ -19,18 +19,18 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = ({ steps }) => {
-  const dates = steps.map((entry) => entry.dateTime);
-  const values = steps.map((entry) => parseInt(entry.value, 10));
+const BarChart = ({ label, activity, color }) => {
+  const dates = activity.map((entry) => entry.dateTime);
+  const values = activity.map((entry) => parseInt(entry.value, 10));
 
   const data = {
     labels: dates,
     datasets: [
       {
-        label: "Steps",
+        label: label,
         data: values,
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: color,
+        borderColor: color,
         borderWidth: 1,
       },
     ],
@@ -52,11 +52,11 @@ const BarChart = ({ steps }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        display: false,
       },
       title: {
         display: true,
-        text: "Daily Steps",
+        text: label,
       },
     },
   };
