@@ -36,7 +36,7 @@ const generateChartData = (restingHeartRates, dateTimes) => {
         label: "Resting Heart Rate",
         data: restingHeartRates,
         borderColor: "red",
-        fill: true,
+        backgroundColor: "red",
       },
     ],
   };
