@@ -5,8 +5,8 @@ import LoginPage from "./components/LoginPage";
 import Today from "./components/Today";
 import RHRMonth from "./components/RHRMonth";
 import Badges from "./components/Badges";
-import Month from "./components/Month";
 import styles from "./index.module.css";
+import ActivityChart from "./components/ActivityChart";
 
 export default function Home() {
   const [token, setToken] = useState(null);
@@ -25,7 +25,7 @@ export default function Home() {
           {console.log("token", token)}
           <div className="container">
             <div className={styles.item}>
-              <Month token={token} />
+              <ActivityChart token={token} />
             </div>
             <div className={styles.item}>
               <Today token={token} />

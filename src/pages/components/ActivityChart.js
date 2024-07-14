@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { fetchData } from "./api";
 import BarChart from "./figs/BarChart";
 
-export default function Month({ token }) {
+export default function ActivityChart({ token }) {
   const [stat, setStat] = useState("Steps");
   const [dateRange, setDateRange] = useState("1 Month");
   const [data, setData] = useState(null);
   const [steps, setSteps] = useState(null);
   const [calories, setCalories] = useState(null);
+  const [distance, setDistance] = useState(null);
+  const [floors, setFloors] = useState(null);
+  const [activeMinutes, setActiveMinutes] = useState(null);
 
   const today = new Date();
   const getDateRange = (range) => {
@@ -34,6 +37,15 @@ export default function Month({ token }) {
     calories: `${BASE_URL}/calories/date/${formatDate(
       oneMonthAgo
     )}/${formatDate(today)}.json`,
+    distance: `${BASE_URL}/distance/date/${formatDate(
+      oneMonthAgo
+    )}/${formatDate(today)}.json`,
+    floors: `${BASE_URL}/floors/date/${formatDate(oneMonthAgo)}/${formatDate(
+      today
+    )}.json`,
+    activeMinutes: `${BASE_URL}/minutesFairlyActive/date/${formatDate(
+      oneMonthAgo
+    )}/${formatDate(today)}.json`,
   };
 
   useEffect(() => {
@@ -46,6 +58,9 @@ export default function Month({ token }) {
     if (data) {
       setSteps(data[0]["activities-steps"]);
       setCalories(data[1]["activities-calories"]);
+      setDistance(data[2]["activities-distance"]);
+      setFloors(data[3]["activities-floors"]);
+      setActiveMinutes(data[4]["activities-minutesFairlyActive"]);
     }
   }, [data]);
 
@@ -59,12 +74,15 @@ export default function Month({ token }) {
 
   return (
     <div>
-      <h3>Month</h3>
+      <h3>Activity Chart</h3>
       <div>
         <label htmlFor="stat-select">Select Statistic: </label>
         <select id="stat-select" value={stat} onChange={handleStatChange}>
           <option value="Steps">Steps</option>
           <option value="Calories">Calories</option>
+          <option value="Distance">Distance</option>
+          <option value="Floors">Floors</option>
+          <option value="Active Minutes">Active Minutes</option>
         </select>
       </div>
       <div>
@@ -79,7 +97,7 @@ export default function Month({ token }) {
           <option value="1 Year">1 Year</option>
         </select>
       </div>
-      {steps && calories ? (
+      {steps && calories && distance && floors && activeMinutes ? (
         <div>
           {stat === "Steps" && (
             <BarChart label={"Steps"} activity={steps} color={"#4cc2c4"} />
@@ -89,6 +107,23 @@ export default function Month({ token }) {
               label={"Calories"}
               activity={calories}
               color={"#FFB347"}
+            />
+          )}
+          {stat === "Distance" && (
+            <BarChart
+              label={"Distance"}
+              activity={distance}
+              color={"#66CC66"}
+            />
+          )}
+          {stat === "Floors" && (
+            <BarChart label={"Floors"} activity={floors} color={"#FF6666"} />
+          )}
+          {stat === "Active Minutes" && (
+            <BarChart
+              label={"Active Minutes"}
+              activity={activeMinutes}
+              color={"#FF9966"}
             />
           )}
         </div>
