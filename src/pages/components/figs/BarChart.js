@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import moment from "moment";
 
 ChartJS.register(
   CategoryScale,
@@ -20,7 +21,9 @@ ChartJS.register(
 );
 
 const BarChart = ({ label, activity, color }) => {
-  const dates = activity.map((entry) => entry.dateTime);
+  const dates = activity.map((entry) =>
+    moment(entry.dateTime).format("MMM DD")
+  );
   const values = activity.map((entry) => parseInt(entry.value, 10));
 
   const data = {
