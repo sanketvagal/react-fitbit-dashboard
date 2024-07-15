@@ -37,6 +37,7 @@ const generateChartData = (restingHeartRates, dateTimes) => {
         data: restingHeartRates,
         borderColor: "red",
         backgroundColor: "red",
+        tension: 0.5,
       },
     ],
   };
