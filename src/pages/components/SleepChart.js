@@ -122,8 +122,9 @@ export default function SleepChart({ token }) {
           <h3>Sleep Data</h3>
           <Line data={chartData} options={chartOptions} />
           <h5>
-            Total hours asleep: {sleepData[0].summary.totalMinutesAsleep / 60}
-            hours
+            Total hours asleep:{" "}
+            {Math.floor(sleepData[0].summary.totalMinutesAsleep / 60)} hours{" "}
+            {sleepData[0].summary.totalMinutesAsleep % 60} minutes
           </h5>
         </div>
       ) : (
