@@ -35,10 +35,6 @@ const sleepStageMap = customSleepStageOrder.reduce((acc, stage, index) => {
   return acc;
 }, {});
 
-const sleepStageLabels = customSleepStageOrder.map(
-  (stage) => stage.charAt(0).toUpperCase() + stage.slice(1)
-);
-
 export default function SleepChart({ token }) {
   const [sleepData, setSleepData] = useState(null);
   const [sleepLevels, setSleepLevels] = useState([]);
@@ -47,11 +43,9 @@ export default function SleepChart({ token }) {
   const BASE_URL = "https://api.fitbit.com/1.2/user/-";
   const today = new Date();
   const formatDate = (date) => date.toISOString().split("T")[0];
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
 
   const endpoints = {
-    sleep: `${BASE_URL}/sleep/date/${formatDate(yesterday)}.json`,
+    sleep: `${BASE_URL}/sleep/date/${formatDate(today)}.json`,
   };
 
   useEffect(() => {
@@ -103,7 +97,7 @@ export default function SleepChart({ token }) {
       y: {
         type: "linear",
         ticks: {
-          callback: (value) => sleepStageLabels[value],
+          callback: (value) => customSleepStageOrder[value],
           stepSize: 1,
         },
       },
