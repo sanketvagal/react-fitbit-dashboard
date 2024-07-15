@@ -37,7 +37,6 @@ const sleepStageMap = customSleepStageOrder.reduce((acc, stage, index) => {
 
 export default function SleepChart({ token }) {
   const [sleepData, setSleepData] = useState(null);
-  const [sleepLevels, setSleepLevels] = useState([]);
   const [sleepStagesOverTime, setSleepStagesOverTime] = useState([]);
 
   const BASE_URL = "https://api.fitbit.com/1.2/user/-";
@@ -53,7 +52,6 @@ export default function SleepChart({ token }) {
       fetchData(token, endpoints).then((data) => {
         setSleepData(data);
         const sleepLevels = data[0].sleep[0].levels.data;
-        setSleepLevels(sleepLevels);
         const sleepStages = sleepLevels.map((entry) => ({
           x: new Date(entry.dateTime),
           y: sleepStageMap[entry.level],
