@@ -62,12 +62,6 @@ export default function SleepChart({ token }) {
     }
   }, [token]);
 
-  useEffect(() => {
-    if (sleepData) {
-      console.log("sleepData", sleepData[0], today);
-    }
-  }, [sleepData]);
-
   const chartData = {
     datasets: [
       {

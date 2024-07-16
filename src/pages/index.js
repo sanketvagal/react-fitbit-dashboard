@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import styles from "./index.module.css";
+
 import LoginPage from "./components/LoginPage";
 import Today from "./components/Today";
 import RHRMonth from "./components/RHRMonth";
 import Badges from "./components/Badges";
-import styles from "./index.module.css";
 import ActivityChart from "./components/ActivityChart";
 import SleepChart from "./components/SleepChart";
 import Weight from "./components/Weight";
@@ -25,24 +26,24 @@ export default function Home() {
         <div>
           <h2>Dashboard</h2>
           {console.log("token", token)}
-          <div className="container">
-            <div className={styles.item}>
-              <Weight token={token} />
-            </div>
-            <div className={styles.item}>
-              <SleepChart token={token} />
-            </div>
-            <div className={styles.item}>
-              <ActivityChart token={token} />
-            </div>
-            <div className={styles.item}>
+          <div className={styles.container}>
+            <div className={styles.today}>
               <Today token={token} />
             </div>
-            <div className={styles.item}>
+            <div className={styles.chart}>
+              <ActivityChart token={token} />
+            </div>
+            <div className={styles.badges}>
+              <Badges token={token} />
+            </div>
+            <div className={styles.chart}>
+              <Weight token={token} />
+            </div>
+            <div className={styles.chart}>
               <RHRMonth token={token} />
             </div>
-            <div className={styles.item}>
-              <Badges token={token} />
+            <div className={styles.chart}>
+              <SleepChart token={token} />
             </div>
           </div>
         </div>

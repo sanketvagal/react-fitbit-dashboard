@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "./api";
 import RHRChart from "./figs/RHRChart";
-import styles from "./RHRMonth.module.css";
+// import styles from "./RHRMonth.module.css";
 import moment from "moment";
 
 const processHeartRateData = (rhrData) => {
@@ -65,6 +65,7 @@ const options = {
 export default function RHRMonth({ token }) {
   const [rhrData, setRhrData] = useState(null);
   const [chartData, setChartData] = useState(null);
+  const [todayRHR, setTodayRHR] = useState(null);
 
   const BASE_URL = "https://api.fitbit.com/1/user/-/activities";
   const today = new Date();
@@ -85,6 +86,11 @@ export default function RHRMonth({ token }) {
 
   useEffect(() => {
     if (rhrData) {
+      setTodayRHR(
+        rhrData[0]["activities-heart"][
+          rhrData[0]["activities-heart"].length - 1
+        ]["value"]["restingHeartRate"]
+      );
       const { restingHeartRates, dateTimes } = processHeartRateData(rhrData);
       const chartData = generateChartData(restingHeartRates, dateTimes);
       setChartData(chartData);
@@ -94,9 +100,10 @@ export default function RHRMonth({ token }) {
   return (
     <div>
       {rhrData ? (
-        <div className={styles.box}>
+        <div>
           <h3>Resting Heart Rate Over Time</h3>
           {chartData && <RHRChart chartData={chartData} options={options} />}
+          <h5> Today's Resting heart rate: {todayRHR}</h5>
         </div>
       ) : (
         <p>Loading activity data...</p>

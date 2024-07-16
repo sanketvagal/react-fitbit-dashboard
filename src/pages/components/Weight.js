@@ -25,12 +25,6 @@ export default function Weight({ token }) {
     }
   }, [token]);
 
-  useEffect(() => {
-    if (weightData) {
-      console.log("weightData", weightData);
-    }
-  }, [weightData]);
-
   return (
     <div>
       <h3>Weight Chart </h3>
