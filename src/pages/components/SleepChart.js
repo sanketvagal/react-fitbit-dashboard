@@ -64,7 +64,7 @@ export default function SleepChart({ token }) {
 
   useEffect(() => {
     if (sleepData) {
-      console.log("sleepData", sleepData[0].summary.totalMinutesAsleep);
+      console.log("sleepData", sleepData[0], today);
     }
   }, [sleepData]);
 

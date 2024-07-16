@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "./api";
 import BarChart from "./figs/BarChart";
-
+import moment from "moment";
 export default function ActivityChart({ token }) {
   const [stat, setStat] = useState("Steps");
   const [dateRange, setDateRange] = useState("1 Month");
@@ -11,6 +11,8 @@ export default function ActivityChart({ token }) {
   const [distance, setDistance] = useState(null);
   const [floors, setFloors] = useState(null);
   const [activeMinutes, setActiveMinutes] = useState(null);
+  const [average, setAverage] = useState(0);
+  const [maxDay, setMaxDay] = useState("");
 
   const today = new Date();
   const getDateRange = (range) => {
@@ -58,11 +60,50 @@ export default function ActivityChart({ token }) {
       setSteps(data[0]["activities-steps"]);
       setCalories(data[1]["activities-calories"]);
       setDistance(data[2]["activities-distance"]);
-      console.log(distance);
       setFloors(data[3]["activities-floors"]);
       setActiveMinutes(data[4]["activities-minutesFairlyActive"]);
     }
   }, [data]);
+
+  useEffect(() => {
+    const calculateStats = (activity) => {
+      if (activity && activity.length > 0) {
+        const values = activity.map((item) => parseInt(item.value));
+        const avg = Math.round(
+          values.reduce((a, b) => a + b, 0) / values.length
+        );
+        const maxVal = Math.max(...values);
+        const maxDayIndex = values.indexOf(maxVal);
+        const maxDay = moment(activity[maxDayIndex].dateTime).format("MMM DD");
+        return { avg, maxDay };
+      }
+      return { avg: 0, maxDay: "" };
+    };
+
+    let result;
+    switch (stat) {
+      case "Steps":
+        result = calculateStats(steps);
+        break;
+      case "Calories":
+        result = calculateStats(calories);
+        break;
+      case "Distance":
+        result = calculateStats(distance);
+        break;
+      case "Floors":
+        result = calculateStats(floors);
+        break;
+      case "Active Minutes":
+        result = calculateStats(activeMinutes);
+        break;
+      default:
+        result = { avg: 0, maxDay: "" };
+    }
+
+    setAverage(result.avg);
+    setMaxDay(result.maxDay);
+  }, [steps, calories, distance, floors, activeMinutes, stat]);
 
   const handleStatChange = (e) => {
     setStat(e.target.value);
@@ -126,6 +167,14 @@ export default function ActivityChart({ token }) {
               color={"#FF9966"}
             />
           )}
+          <div>
+            <p>
+              {dateRange} Average for {stat}: {average}
+            </p>
+            <p>
+              Day with Max {stat}: {maxDay}
+            </p>
+          </div>
         </div>
       ) : (
         <p>Loading...</p>
