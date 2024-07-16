@@ -172,7 +172,7 @@ export default function ActivityChart({ token }) {
               {dateRange} Average for {stat}: {average}
             </p>
             <p>
-              Day with Max {stat}: {maxDay}
+              Day with most {stat}: {maxDay}
             </p>
           </div>
         </div>
