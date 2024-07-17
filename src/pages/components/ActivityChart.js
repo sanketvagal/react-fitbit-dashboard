@@ -28,7 +28,7 @@ export default function ActivityChart({ token }) {
     }
   };
 
-  const formatDate = (date) => date.toISOString().split("T")[0];
+  const formatDate = (date) => date.toLocaleDateString("en-CA");
 
   const BASE_URL = "https://api.fitbit.com/1/user/-/activities";
   const endpoints = {

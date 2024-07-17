@@ -70,7 +70,7 @@ export default function RHRMonth({ token }) {
   const BASE_URL = "https://api.fitbit.com/1/user/-/activities";
   const today = new Date();
   const oneMonthAgo = new Date(new Date().setMonth(today.getMonth() - 1));
-  const formatDate = (date) => date.toISOString().split("T")[0];
+  const formatDate = (date) => date.toLocaleDateString("en-CA");
 
   const endpoints = {
     dailyActivities: `${BASE_URL}/heart/date/${formatDate(

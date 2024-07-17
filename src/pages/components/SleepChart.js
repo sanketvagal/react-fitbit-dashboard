@@ -41,8 +41,7 @@ export default function SleepChart({ token }) {
 
   const BASE_URL = "https://api.fitbit.com/1.2/user/-";
   const today = new Date();
-  const formatDate = (date) => date.toISOString().split("T")[0];
-
+  const formatDate = (date) => date.toLocaleDateString("en-CA");
   const endpoints = {
     sleep: `${BASE_URL}/sleep/date/${formatDate(today)}.json`,
   };

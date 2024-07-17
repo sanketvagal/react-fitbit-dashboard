@@ -8,7 +8,7 @@ export default function Weight({ token }) {
 
   const oneMonthAgo = new Date(new Date().setMonth(today.getMonth() - 1));
 
-  const formatDate = (date) => date.toISOString().split("T")[0];
+  const formatDate = (date) => date.toLocaleDateString("en-CA");
 
   const BASE_URL = "https://api.fitbit.com/1/user/-/body";
   const endpoints = {
