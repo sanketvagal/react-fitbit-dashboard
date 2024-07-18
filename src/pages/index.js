@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import axios from "axios";
-import styles from "./index.module.css";
+import React, { useState } from "react";
 
+import styles from "./index.module.css";
 import LoginPage from "./components/LoginPage";
 import Today from "./components/Today";
 import RHRMonth from "./components/RHRMonth";
